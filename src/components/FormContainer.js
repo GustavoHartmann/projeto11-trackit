@@ -45,6 +45,10 @@ const FormContainer = styled.div`
     border-radius: 5px;
 
     margin-bottom: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   p {

@@ -9,8 +9,8 @@ export default function Login() {
       <img src={logo} alt="logo" />
       <FormContainer>
         <form>
-          <input type="text" placeholder="Email" />
-          <input type="text" placeholder="Senha" />
+          <input type="text" placeholder="Email" required />
+          <input type="password" placeholder="Senha" required />
           <button type="submit">Entrar</button>
         </form>
         <Link to={"/cadastro"}>

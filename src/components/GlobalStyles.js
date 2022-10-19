@@ -50,6 +50,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+button:disabled, input:disabled {
+    opacity: 0.7;
+}
 `;
 
 export default GlobalStyles;
