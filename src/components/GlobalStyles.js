@@ -29,11 +29,12 @@ footer, header, hgroup, menu, nav, section {
 
 *{
     box-sizing: border-box;
-    font-family: 'Lexend Deca', sans-serif;
 }
 
 body {
 	line-height: 1;
+	font-family: 'Lexend Deca', sans-serif;
+	background-color: #E5E5E5;
 }
 ol, ul {
 	list-style: none;
@@ -49,6 +50,22 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+h1 {
+	font-size: 23px;
+
+	color: #126BA5;
+}
+
+h2 {
+	font-size: 20px;
+
+	color: #666666;
+}
+
+h3 {
+	font-size: 18px;
 }
 
 button:disabled, input:disabled {
