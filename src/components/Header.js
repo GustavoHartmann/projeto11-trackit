@@ -1,12 +1,16 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import logo from "../assets/images/logo-header.png";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
+  const { objUsuario } = useContext(AuthContext);
+
   return (
     <HeaderContainer>
       <img src={logo} alt="logo" />
       <img
-        src="https://i.pinimg.com/736x/ff/ff/c2/ffffc257d0dd701d2a630197320ca477.jpg"
+        src={objUsuario.image}
         alt="imagem do perfil"
       />
     </HeaderContainer>
@@ -29,6 +33,7 @@ const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 1;
 
   img:last-child {
     width: 50px;

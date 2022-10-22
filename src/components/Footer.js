@@ -1,11 +1,16 @@
 import { CircularProgressbar } from "react-circular-progressbar";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Footer() {
   return (
     <FooterContainer>
-      <p>Hábitos</p>
-      <CircularProgressbar value={50} text="Hoje" />
+      <Link to={"/habitos"}>
+        <p>Hábitos</p>
+      </Link>
+      <Link to={"/hoje"}>
+        <CircularProgressbar value={50} text="Hoje" />
+      </Link>
       <p>Histórico</p>
     </FooterContainer>
   );

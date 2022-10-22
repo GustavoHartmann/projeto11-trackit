@@ -7,19 +7,19 @@ export default function Hoje() {
   return (
     <>
       <Header />
-      <HojeContainer>
+      <TelaHojeContainer>
         <h1>Segunda, 17/05</h1>
         <h3>Nenhum hábito concluído ainda</h3>
         <HabitoHoje />
         <HabitoHoje />
         <HabitoHoje />
-      </HojeContainer>
+      </TelaHojeContainer>
       <Footer />
     </>
   );
 }
 
-const HojeContainer = styled.div`
+const TelaHojeContainer = styled.div`
   width: 90%;
 
   margin: 90px auto;

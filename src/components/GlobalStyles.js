@@ -29,6 +29,7 @@ footer, header, hgroup, menu, nav, section {
 
 *{
     box-sizing: border-box;
+	text-decoration: none;
 }
 
 body {
@@ -67,6 +68,31 @@ h2 {
 h3 {
 	font-size: 18px;
 }
+
+input {
+    width: 100%;
+    height: 45px;
+
+    font-size: 20px;
+
+    color: #666666;
+
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+
+	margin-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  input::placeholder {
+    font-style: italic;
+
+    color: #dbdbdb;
+  }
+
+  input:focus {
+    outline-color: #666666;
+  }
 
 button:disabled, input:disabled {
     opacity: 0.7;

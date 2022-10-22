@@ -13,7 +13,6 @@ export default function Cadastro() {
   const [inputNome, setInputNome] = useState("");
   const [inputFoto, setInputFoto] = useState("");
   const [estadoBotao, setEstadoBotao] = useState(false);
-  const [conteudoBotao, setConteudoBotao] = useState("Cadastrar");
   const navigate = useNavigate();
 
   function cadastrarUsuario(e) {
@@ -28,13 +27,11 @@ export default function Cadastro() {
     });
 
     setEstadoBotao(true);
-    setConteudoBotao(<ThreeDots color="white" />);
 
     promise.then(() => navigate("/"));
 
     promise.catch((erro) => {
       setEstadoBotao(false);
-      setConteudoBotao("Cadastrar");
       Swal.fire({
         icon: "error",
         title: erro.response.data.message,
@@ -80,7 +77,7 @@ export default function Cadastro() {
             disabled={estadoBotao}
           />
           <button type="submit" disabled={estadoBotao}>
-            {conteudoBotao}
+            {estadoBotao ? <ThreeDots color="white" /> : "Cadastrar"}
           </button>
         </form>
         <Link to={"/"}>
@@ -94,7 +91,7 @@ export default function Cadastro() {
 const CadastroContainer = styled.div`
   width: 80%;
 
-  margin: 35vw auto;
+  margin: 70px auto;
 
   display: flex;
   flex-direction: column;

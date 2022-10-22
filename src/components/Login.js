@@ -1,18 +1,20 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import logo from "../assets/images/logo-login.png";
+import { AuthContext } from "../context/AuthContext";
 import FormContainer from "./FormContainer";
 
 export default function Login() {
   const [inputEmail, setInputEmail] = useState("");
   const [inputSenha, setInputSenha] = useState("");
   const [estadoBotao, setEstadoBotao] = useState(false);
-  const [conteudoBotao, setConteudoBotao] = useState("Entrar");
   const navigate = useNavigate();
+
+  const { setObjetoUsuario } = useContext(AuthContext);
 
   function FazerLogin(e) {
     e.preventDefault();
@@ -24,16 +26,14 @@ export default function Login() {
     });
 
     setEstadoBotao(true);
-    setConteudoBotao(<ThreeDots color="white" />);
 
     promise.then((response) => {
-      console.log(response.data);
+      setObjetoUsuario(response.data);
       navigate("/hoje");
     });
 
     promise.catch((erro) => {
       setEstadoBotao(false);
-      setConteudoBotao("Entrar");
       Swal.fire({
         icon: "error",
         title: erro.response.data.message,
@@ -63,7 +63,7 @@ export default function Login() {
             disabled={estadoBotao}
           />
           <button type="submit" disabled={estadoBotao}>
-            {conteudoBotao}
+            {estadoBotao ? <ThreeDots color="white" /> : "Entrar"}
           </button>
         </form>
         <Link to={"/cadastro"}>
@@ -77,7 +77,7 @@ export default function Login() {
 const LoginContainer = styled.div`
   width: 80%;
 
-  margin: 35vw auto;
+  margin: 70px auto;
 
   display: flex;
   flex-direction: column;
