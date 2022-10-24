@@ -104,6 +104,7 @@ export default function HabitoHoje({
       <InfoHabitoContainer
         feito={habito.done}
         igual={habito.highestSequence === habito.currentSequence}
+        data-identifier="today-infos"
       >
         <h2>{habito.name}</h2>
         <p>
@@ -113,7 +114,7 @@ export default function HabitoHoje({
           Seu recorde: <b>{habito.highestSequence} dias</b>
         </p>
       </InfoHabitoContainer>
-      <AiFillCheckSquare onClick={marcarOuDesmarcarHabitoComoFeito} />
+      <AiFillCheckSquare onClick={marcarOuDesmarcarHabitoComoFeito} data-identifier="done-habit-btn"/>
     </HabitoHojeContainer>
   );
 }

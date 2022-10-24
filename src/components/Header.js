@@ -12,6 +12,7 @@ export default function Header() {
       <img
         src={objUsuario.image}
         alt="imagem do perfil"
+        data-identifier="avatar"
       />
     </HeaderContainer>
   );

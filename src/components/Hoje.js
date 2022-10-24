@@ -50,11 +50,15 @@ export default function Hoje() {
     <>
       <Header />
       <TelaHojeContainer feito={arrayHabitosfeitos.length === 0}>
-        <h1>{dia[0].toUpperCase() + dia.substring(1)}</h1>
+        <h1 data-identifier="today-infos">
+          {dia[0].toUpperCase() + dia.substring(1)}
+        </h1>
         {arrayHabitosfeitos.length === 0 ? (
           <h3>Nenhum hábito concluído ainda</h3>
         ) : (
-          <h3>{valorPorcentagem}% dos hábitos concluídos</h3>
+          <h3 data-identifier="today-infos">
+            {valorPorcentagem}% dos hábitos concluídos
+          </h3>
         )}
         {habitos.map((h) => (
           <HabitoHoje

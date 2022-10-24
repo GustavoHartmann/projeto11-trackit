@@ -51,6 +51,7 @@ export default function Cadastro() {
             placeholder="Email"
             required
             disabled={estadoBotao}
+            data-identifier="input-email"
           />
           <input
             type="password"
@@ -59,6 +60,7 @@ export default function Cadastro() {
             placeholder="Senha"
             required
             disabled={estadoBotao}
+            data-identifier="input-password"
           />
           <input
             type="text"
@@ -67,6 +69,7 @@ export default function Cadastro() {
             placeholder="Nome"
             required
             disabled={estadoBotao}
+            data-identifier="input-name"
           />
           <input
             type="url"
@@ -75,12 +78,13 @@ export default function Cadastro() {
             placeholder="Foto"
             required
             disabled={estadoBotao}
+            data-identifier="input-photo"
           />
           <button type="submit" disabled={estadoBotao}>
             {estadoBotao ? <ThreeDots color="white" /> : "Cadastrar"}
           </button>
         </form>
-        <Link to={"/"}>
+        <Link to={"/"} data-identifier="back-to-login-action">
           <p>Já tem uma conta? Faça login!</p>
         </Link>
       </FormContainer>

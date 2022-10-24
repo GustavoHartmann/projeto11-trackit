@@ -8,14 +8,14 @@ export default function Footer() {
   const { valorPorcentagem } = useContext(AuthContext);
 
   return (
-    <FooterContainer>
-      <Link to={"/habitos"}>
+    <FooterContainer valorPorcentagem={valorPorcentagem === 100}>
+      <Link to={"/habitos"} data-identifier="habit-page-action">
         <p>Hábitos</p>
       </Link>
       <Link to={"/hoje"}>
         <CircularProgressbar value={valorPorcentagem} text="Hoje" />
       </Link>
-      <Link to={"/historico"}>
+      <Link to={"/historico"} data-identifier="historic-page-action">
         <p>Histórico</p>
       </Link>
     </FooterContainer>

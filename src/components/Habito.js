@@ -62,8 +62,8 @@ export default function Habito({ h, setHabitos }) {
 
   return (
     <HabitoContainer>
-      <h2>{h.name}</h2>
-      <CiTrash onClick={deletarHabito} />
+      <h2 data-identifier="habit-name">{h.name}</h2>
+      <CiTrash onClick={deletarHabito} data-identifier="delete-habit-btn" />
       <div>
         {dias.map((d, index) => (
           <DiasDoHabito key={index} selecionado={h.days.includes(index)}>

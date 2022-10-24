@@ -33,42 +33,49 @@ export default function ModalCriarHabito({
   }
 
   function enviarHabitoCriado() {
-    const habitoCriado = { name: inputHabito, days: arrayDiasSelecionados };
-    const config = {
-      headers: {
-        Authorization: `Bearer ${objUsuario.token}`,
-      },
-    };
-    const url =
-      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-    const promise = axios.post(url, habitoCriado, config);
+    if (arrayDiasSelecionados.length > 0) {
+      const habitoCriado = { name: inputHabito, days: arrayDiasSelecionados };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${objUsuario.token}`,
+        },
+      };
+      const url =
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+      const promise = axios.post(url, habitoCriado, config);
 
-    setEstadoBotao(true);
+      setEstadoBotao(true);
 
-    promise.then(() => {
-      const promessa = axios.get(url, config);
+      promise.then(() => {
+        const promessa = axios.get(url, config);
 
-      promessa.then((response) => setHabitos(response.data));
+        promessa.then((response) => setHabitos(response.data));
 
-      promessa.catch((erro) => {
+        promessa.catch((erro) => {
+          Swal.fire({
+            icon: "error",
+            title: erro.response.data.message,
+          });
+        });
+        setMostrarModalCriarHabito(false);
+        setArrayDiasSelecionados([]);
+        setInputHabito("");
+        setEstadoBotao(false);
+      });
+
+      promise.catch((erro) => {
         Swal.fire({
           icon: "error",
           title: erro.response.data.message,
         });
+        setEstadoBotao(false);
       });
-      setMostrarModalCriarHabito(false);
-      setArrayDiasSelecionados([]);
-      setInputHabito("");
-      setEstadoBotao(false);
-    });
-
-    promise.catch((erro) => {
+    } else {
       Swal.fire({
         icon: "error",
-        title: erro.response.data.message,
+        title: "É preciso selecionar ao menos um dia para salvar",
       });
-      setEstadoBotao(false);
-    });
+    }
   }
 
   return (
@@ -79,6 +86,7 @@ export default function ModalCriarHabito({
         value={inputHabito}
         onChange={(e) => setInputHabito(e.target.value)}
         disabled={estadoBotao}
+        data-identifier="input-habit-name"
       />
       <div>
         {dias.map((d, index) => (
@@ -87,6 +95,7 @@ export default function ModalCriarHabito({
             onClick={selecionarDias}
             selecionado={arrayDiasSelecionados.includes(index)}
             disabled={estadoBotao}
+            data-identifier="week-day-btn"
           >
             {d}
           </BotaoDia>
@@ -100,10 +109,15 @@ export default function ModalCriarHabito({
             setInputHabito("");
           }}
           disabled={estadoBotao}
+          data-identifier="cancel-habit-create-btn"
         >
           Cancelar
         </button>
-        <button onClick={enviarHabitoCriado} disabled={estadoBotao}>
+        <button
+          onClick={enviarHabitoCriado}
+          disabled={estadoBotao}
+          data-identifier="save-habit-create-btn"
+        >
           {estadoBotao ? <ThreeDots color="white" /> : "Salvar"}
         </button>
       </BotoesContainer>

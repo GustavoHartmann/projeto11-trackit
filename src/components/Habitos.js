@@ -43,14 +43,16 @@ export default function Habitos() {
       <Header />
       <TelaHabitosContainer>
         <h1>Meus hábitos</h1>
-        <button onClick={gerarModal}>+</button>
+        <button onClick={gerarModal} data-identifier="create-habit-btn">
+          +
+        </button>
         <ModalCriarHabito
           mostrarModalCriarHabito={mostrarModalCriarHabito}
           setMostrarModalCriarHabito={setMostrarModalCriarHabito}
           setHabitos={setHabitos}
         />
         {habitos.length === 0 ? (
-          <h3>
+          <h3 data-identifier="no-habit-message">
             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
             começar a trackear!
           </h3>

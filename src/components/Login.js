@@ -53,6 +53,7 @@ export default function Login() {
             placeholder="Email"
             required
             disabled={estadoBotao}
+            data-identifier="input-email"
           />
           <input
             type="password"
@@ -61,12 +62,17 @@ export default function Login() {
             placeholder="Senha"
             required
             disabled={estadoBotao}
+            data-identifier="input-password"
           />
-          <button type="submit" disabled={estadoBotao}>
+          <button
+            type="submit"
+            disabled={estadoBotao}
+            data-identifier="login-btn"
+          >
             {estadoBotao ? <ThreeDots color="white" /> : "Entrar"}
           </button>
         </form>
-        <Link to={"/cadastro"}>
+        <Link to={"/cadastro"} data-identifier="sign-up-action">
           <p>Não tem uma conta? Cadastre-se!</p>
         </Link>
       </FormContainer>
