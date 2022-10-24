@@ -1,14 +1,119 @@
+import axios from "axios";
+import { useContext } from "react";
+import { AiFillCheckSquare } from "react-icons/ai";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+import { AuthContext } from "../context/AuthContext";
 
-export default function HabitoHoje() {
+export default function HabitoHoje({
+  habito,
+  setHabitos,
+  setArrayHabitosfeitos,
+}) {
+  const { objUsuario, setValorPorcentagem } = useContext(AuthContext);
+  const porcentagemTotal = 100;
+
+  function marcarOuDesmarcarHabitoComoFeito() {
+    if (habito.done) {
+      desmarcarHabitoComoFeito();
+    } else {
+      marcarHabitoComoFeito();
+    }
+  }
+
+  function marcarHabitoComoFeito() {
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${objUsuario.token}`,
+      },
+    };
+    const promise = axios.post(url, {}, config);
+
+    promise.then(() => {
+      const urlGet =
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+      const promessa = axios.get(urlGet, config);
+
+      promessa.then((response) => {
+        setHabitos(response.data);
+        const arrayFeitos = response.data.filter((h) => h.done);
+        setArrayHabitosfeitos(arrayFeitos);
+        const porcentagem =
+          (arrayFeitos.length / response.data.length) * porcentagemTotal;
+        setValorPorcentagem(porcentagem.toFixed());
+      });
+
+      promessa.catch((erro) => {
+        Swal.fire({
+          icon: "error",
+          title: erro.response.data.message,
+        });
+      });
+    });
+
+    promise.catch((erro) => {
+      Swal.fire({
+        icon: "error",
+        title: erro.response.data.message,
+      });
+    });
+  }
+
+  function desmarcarHabitoComoFeito() {
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/uncheck`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${objUsuario.token}`,
+      },
+    };
+    const promise = axios.post(url, {}, config);
+
+    promise.then(() => {
+      const urlGet =
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+      const promessa = axios.get(urlGet, config);
+
+      promessa.then((response) => {
+        setHabitos(response.data);
+        const arrayFeitos = response.data.filter((h) => h.done);
+        setArrayHabitosfeitos(arrayFeitos);
+        const porcentagem =
+          (arrayFeitos.length / response.data.length) * porcentagemTotal;
+        setValorPorcentagem(porcentagem.toFixed());
+      });
+
+      promessa.catch((erro) => {
+        Swal.fire({
+          icon: "error",
+          title: erro.response.data.message,
+        });
+      });
+    });
+
+    promise.catch((erro) => {
+      Swal.fire({
+        icon: "error",
+        title: erro.response.data.message,
+      });
+    });
+  }
+
   return (
-    <HabitoHojeContainer>
-      <InfoHabitoContainer>
-        <h2>Ler 1 capítulo de livro</h2>
-        <p>Sequência atual: 3 dias</p>
-        <p>Seu recorde: 5 dias</p>
+    <HabitoHojeContainer feito={habito.done}>
+      <InfoHabitoContainer
+        feito={habito.done}
+        igual={habito.highestSequence === habito.currentSequence}
+      >
+        <h2>{habito.name}</h2>
+        <p>
+          Sequência atual: <b>{habito.currentSequence} dias</b>
+        </p>
+        <p>
+          Seu recorde: <b>{habito.highestSequence} dias</b>
+        </p>
       </InfoHabitoContainer>
-      <ion-icon name="checkbox"></ion-icon>
+      <AiFillCheckSquare onClick={marcarOuDesmarcarHabitoComoFeito} />
     </HabitoHojeContainer>
   );
 }
@@ -27,22 +132,30 @@ const HabitoHojeContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ion-icon {
-    font-size: 69px;
+  svg {
+    font-size: 90px;
 
-    color: #EBEBEB;
+    color: ${(props) => (props.feito ? "#8FC549" : "#ebebeb")};
   }
 `;
 const InfoHabitoContainer = styled.div`
-    h2 {
-        margin-bottom: 10px;
-    }
+  h2 {
+    margin-bottom: 10px;
+  }
 
-    p {
-        font-size: 13px;
-        
-        color: #666666;
+  p {
+    font-size: 13px;
 
-        margin: 5px 0;
-    }
+    color: #666666;
+
+    margin: 5px 0;
+  }
+
+  b {
+    color: ${(props) => (props.feito ? "#8FC549" : "#666666")};
+  }
+
+  p:last-child b {
+    color: ${(props) => (props.feito && props.igual ? "#8FC549" : "#666666")};
+  }
 `;

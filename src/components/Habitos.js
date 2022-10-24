@@ -11,19 +11,18 @@ import ModalCriarHabito from "./ModalCriarHabito";
 export default function Habitos() {
   const [mostrarModalCriarHabito, setMostrarModalCriarHabito] = useState(false);
   const [habitos, setHabitos] = useState([]);
-  console.log(habitos);
 
   const { objUsuario } = useContext(AuthContext);
 
   useEffect(() => {
-    const Url =
+    const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const config = {
       headers: {
         Authorization: `Bearer ${objUsuario.token}`,
       },
     };
-    const promise = axios.get(Url, config);
+    const promise = axios.get(url, config);
 
     promise.then((response) => setHabitos(response.data));
 
@@ -48,6 +47,7 @@ export default function Habitos() {
         <ModalCriarHabito
           mostrarModalCriarHabito={mostrarModalCriarHabito}
           setMostrarModalCriarHabito={setMostrarModalCriarHabito}
+          setHabitos={setHabitos}
         />
         {habitos.length === 0 ? (
           <h3>
@@ -55,7 +55,9 @@ export default function Habitos() {
             começar a trackear!
           </h3>
         ) : (
-          habitos.map((h, idx) => <Habito key={idx} h={h} />)
+          habitos.map((h, idx) => (
+            <Habito key={idx} h={h} setHabitos={setHabitos} />
+          ))
         )}
       </TelaHabitosContainer>
       <Footer />

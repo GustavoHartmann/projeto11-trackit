@@ -18,9 +18,9 @@ export default function Login() {
 
   function FazerLogin(e) {
     e.preventDefault();
-    const Url =
+    const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
-    const promise = axios.post(Url, {
+    const promise = axios.post(url, {
       email: inputEmail,
       password: inputSenha,
     });

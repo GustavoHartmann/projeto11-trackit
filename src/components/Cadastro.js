@@ -17,9 +17,9 @@ export default function Cadastro() {
 
   function cadastrarUsuario(e) {
     e.preventDefault();
-    const Url =
+    const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
-    const promise = axios.post(Url, {
+    const promise = axios.post(url, {
       email: inputEmail,
       name: inputNome,
       image: inputFoto,

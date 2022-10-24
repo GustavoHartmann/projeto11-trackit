@@ -8,12 +8,12 @@ import { AuthContext } from "../context/AuthContext";
 export default function ModalCriarHabito({
   mostrarModalCriarHabito,
   setMostrarModalCriarHabito,
+  setHabitos,
 }) {
   const [arrayDiasSelecionados, setArrayDiasSelecionados] = useState([]);
   const [inputHabito, setInputHabito] = useState("");
   const [estadoBotao, setEstadoBotao] = useState(false);
   const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-  //console.log(arrayDiasSelecionados);
 
   const { objUsuario } = useContext(AuthContext);
 
@@ -23,8 +23,10 @@ export default function ModalCriarHabito({
         if (!arrayDiasSelecionados.includes(index)) {
           setArrayDiasSelecionados([...arrayDiasSelecionados, index]);
         } else {
-          const novoArray = arrayDiasSelecionados.filter((n) => n !== index);
-          setArrayDiasSelecionados(novoArray);
+          const arrayDiasSelecionadosFiltrados = arrayDiasSelecionados.filter(
+            (n) => n !== index
+          );
+          setArrayDiasSelecionados(arrayDiasSelecionadosFiltrados);
         }
       }
     });
@@ -37,13 +39,23 @@ export default function ModalCriarHabito({
         Authorization: `Bearer ${objUsuario.token}`,
       },
     };
-    const Url =
+    const url =
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-    const promise = axios.post(Url, habitoCriado, config);
+    const promise = axios.post(url, habitoCriado, config);
 
     setEstadoBotao(true);
 
     promise.then(() => {
+      const promessa = axios.get(url, config);
+
+      promessa.then((response) => setHabitos(response.data));
+
+      promessa.catch((erro) => {
+        Swal.fire({
+          icon: "error",
+          title: erro.response.data.message,
+        });
+      });
       setMostrarModalCriarHabito(false);
       setArrayDiasSelecionados([]);
       setInputHabito("");

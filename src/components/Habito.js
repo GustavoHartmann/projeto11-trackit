@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useContext } from "react";
+import { CiTrash } from "react-icons/ci";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 
-export default function Habito({ h }) {
+export default function Habito({ h, setHabitos }) {
   const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
   const { objUsuario } = useContext(AuthContext);
@@ -15,7 +16,7 @@ export default function Habito({ h }) {
         Authorization: `Bearer ${objUsuario.token}`,
       },
     };
-    const Url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`;
+    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${h.id}`;
 
     Swal.fire({
       title: "Você tem certeza disso?",
@@ -27,9 +28,21 @@ export default function Habito({ h }) {
       confirmButtonText: "Deletar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const promise = axios.delete(Url, config);
+        const promise = axios.delete(url, config);
 
         promise.then(() => {
+          const urlGet =
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+          const promessa = axios.get(urlGet, config);
+
+          promessa.then((response) => setHabitos(response.data));
+
+          promessa.catch((erro) => {
+            Swal.fire({
+              icon: "error",
+              title: erro.response.data.message,
+            });
+          });
           Swal.fire(
             "Deletado!",
             "Seu hábito foi deletado com sucesso!",
@@ -50,7 +63,7 @@ export default function Habito({ h }) {
   return (
     <HabitoContainer>
       <h2>{h.name}</h2>
-      <ion-icon name="trash-outline" onClick={deletarHabito}></ion-icon>
+      <CiTrash onClick={deletarHabito} />
       <div>
         {dias.map((d, index) => (
           <DiasDoHabito key={index} selecionado={h.days.includes(index)}>
@@ -74,7 +87,7 @@ const HabitoContainer = styled.div`
 
   position: relative;
 
-  ion-icon {
+  svg {
     font-size: 15px;
 
     color: #666666;

@@ -1,17 +1,23 @@
+import { useContext } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Footer() {
+  const { valorPorcentagem } = useContext(AuthContext);
+
   return (
     <FooterContainer>
       <Link to={"/habitos"}>
         <p>Hábitos</p>
       </Link>
       <Link to={"/hoje"}>
-        <CircularProgressbar value={50} text="Hoje" />
+        <CircularProgressbar value={valorPorcentagem} text="Hoje" />
       </Link>
-      <p>Histórico</p>
+      <Link to={"/historico"}>
+        <p>Histórico</p>
+      </Link>
     </FooterContainer>
   );
 }
